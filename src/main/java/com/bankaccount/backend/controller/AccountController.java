@@ -49,7 +49,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/{id}/deposit/{amount}", method = RequestMethod.POST)
-    public Account makeDeposit(@PathVariable Long id, @PathVariable(value = "amount") float amount){
+    public Account makeDeposit(@PathVariable(value = "id") Long id, @PathVariable(value = "amount") float amount){
         Account account = accountService.read(id);
         return accountService.saveMoney(account, amount);
     }
