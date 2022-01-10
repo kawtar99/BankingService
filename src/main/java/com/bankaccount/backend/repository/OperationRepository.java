@@ -31,6 +31,9 @@ public class OperationRepository{
     }
 
     public List<Operation> findByAccountId(Long id){
+        if (!operations.containsKey(id)){
+            
+        }
         return operations.get(id);
     }
 
