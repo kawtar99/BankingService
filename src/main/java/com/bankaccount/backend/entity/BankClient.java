@@ -1,22 +1,21 @@
 package com.bankaccount.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
 public class BankClient {
     
-    @Id
-	@GeneratedValue
+    static long ID_GENERATOR = 0;
+
 	private Long id;
 	private String firstName;
 	private String lastName;
 
     @SuppressWarnings("unused")
-    private BankClient(){}
+    private BankClient(){
+        this.id = ++ID_GENERATOR;
+    }
 
     public BankClient(String firstName, String lastName){
+        this.id = ++ID_GENERATOR;
         this.firstName = firstName;
         this.lastName = lastName;
     }

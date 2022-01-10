@@ -3,6 +3,7 @@ package com.bankaccount.backend.service;
 import java.util.Optional;
 
 import com.bankaccount.backend.entity.BankClient;
+import com.bankaccount.backend.exception.BankClientNotFoundException;
 import com.bankaccount.backend.repository.BankClientRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ public class BankClientService {
         return bankClientRepository.save(bankClient);
     }
 
-    public BankClient read(Long id) {
+    public BankClient read(Long id) throws BankClientNotFoundException {
         Optional<BankClient> optional = bankClientRepository.findById(id);
-        if(optional.isPresent()){
-            return optional.get();
+        if(!optional.isPresent()){
+            throw new BankClientNotFoundException("Client with id : " + id + " is not found");
         }
-        return  null;
+        return optional.get();
     }
     
 }

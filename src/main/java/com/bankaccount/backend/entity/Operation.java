@@ -2,16 +2,11 @@ package com.bankaccount.backend.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
-@Entity
 public class Operation {
+
+    static long ID_GENERATOR = 0;
     
-    @Id
-	@GeneratedValue
     private Long id;
     
     private String operationName;
@@ -19,12 +14,14 @@ public class Operation {
     private Date date;
     private float amount;
     private float balance;
-
-    @ManyToOne
     private Account account;
 
+    
 
-    public Operation(){}
+
+    public Operation(){
+        this.id = ++ID_GENERATOR;
+    }
 
     public Long getId() {
         return id;

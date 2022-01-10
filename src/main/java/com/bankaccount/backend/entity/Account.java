@@ -1,26 +1,21 @@
 package com.bankaccount.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
-@Entity 
 public class Account {
     
-    @Id 
-    @GeneratedValue
+    static long ID_GENERATOR = 0;
+
 	private Long id;
-
     private float balance;
-
-    @OneToOne
     private BankClient client;
 
     @SuppressWarnings("unused")
-    private Account(){}
+    private Account(){
+        this.id = ++ID_GENERATOR;
+    }
 
     public Account(float balance){
+        this.id = ++ID_GENERATOR;
         this.balance = balance;
     }
 
@@ -49,24 +44,4 @@ public class Account {
         this.client = client;
     }
 
-    public void addToBalance(float amount){
-        if (amount < 0){
-            throw new RuntimeException("The amount should be positive");
-        }
-        balance = balance + amount;
-    }
-    
-    public void retrieveFromBalance(float amount){
-        if (amount < 0){
-            throw new RuntimeException("The amount should be positive");
-        }
-
-        if (amount > balance){
-            throw new RuntimeException("Your account balance is lower than the amount desired");
-        }
-
-        else{
-            balance = balance - amount;
-        }
-    }
 }

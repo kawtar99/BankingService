@@ -9,6 +9,6 @@ public class HomeController {
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
-        return "Updated the application";
+        return "Banking Application";
     }
 }
