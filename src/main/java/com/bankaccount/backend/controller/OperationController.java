@@ -32,6 +32,7 @@ public class OperationController {
         return operationService.listByAccount(id);
     }
 
+
     @ExceptionHandler(AccountNotFoundException.class)
     public void handleAccountNotFound(AccountNotFoundException exception, HttpServletResponse response) throws IOException{
         response.sendError(HttpStatus.NOT_FOUND.value(), exception.getMessage());

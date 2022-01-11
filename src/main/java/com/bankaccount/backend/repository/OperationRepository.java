@@ -32,7 +32,7 @@ public class OperationRepository{
 
     public List<Operation> findByAccountId(Long id){
         if (!operations.containsKey(id)){
-            
+            operations.put(id, new ArrayList<Operation>());
         }
         return operations.get(id);
     }

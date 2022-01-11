@@ -44,16 +44,27 @@ public class AccountService {
         bankClientRepository.save(account.getClient());
 		return accountRepository.save(account);
 	}
+
+    public float getBalance(Long id) throws AccountNotFoundException{
+        List<Operation> operations = operationRepository.findByAccountId(id);
+        Date now = new Date();
+        float result = 0;
+        for(Operation operation : operations){
+            if(operation.getDate().before(now)){
+                result += operation.getAmount();
+            }
+        }
+        return result;
+    }
     
     public Account saveMoney(Account account, float amount) throws IllegalOperationException{
         if (amount < 0){
             throw new IllegalOperationException("The amount should be positive");
         }
-        account.setBalance(account.getBalance() + amount);
         Operation operation = new Operation();
         operation.setOperationName("DEPOSIT");
         operation.setAmount(amount);
-        operation.setBalance(account.getBalance());
+        operation.setBalance(getBalance(account.getId()));
         operation.setDate(new Date());
         operation.setAccount(account);
         operationRepository.save(operation);
@@ -65,14 +76,14 @@ public class AccountService {
             throw new IllegalOperationException("The amount should be positive");
         }
 
-        if (amount > account.getBalance()){
+        if (amount > getBalance(account.getId())){
             throw new IllegalOperationException("Your account balance is lower than the amount desired");
         }
-        account.setBalance(account.getBalance() - amount);
+        
         Operation operation = new Operation();
         operation.setOperationName("WITHDRAWAL");
         operation.setAmount(-amount);
-        operation.setBalance(account.getBalance());
+        operation.setBalance(getBalance(account.getId()));
         operation.setDate(new Date());
         operation.setAccount(account);
         operationRepository.save(operation);
@@ -81,7 +92,6 @@ public class AccountService {
 
     public Account update(Long id, Account update) throws AccountNotFoundException {
         Account account = read(id);
-		account.setBalance(update.getBalance());
 		return accountRepository.save(account);
     }
 

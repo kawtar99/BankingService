@@ -62,6 +62,11 @@ public class AccountController {
         return accountService.saveMoney(account, amount);
     }
 
+    @RequestMapping(value = "/{id}/balance", method = RequestMethod.GET)
+    public float getBalance(@PathVariable(value = "id") Long id) throws AccountNotFoundException{
+        return accountService.getBalance(id);
+    }
+
     @ExceptionHandler(AccountNotFoundException.class)
     public void handleAccountNotFound(AccountNotFoundException exception, HttpServletResponse response) throws IOException{
         response.sendError(HttpStatus.NOT_FOUND.value(), exception.getMessage());
