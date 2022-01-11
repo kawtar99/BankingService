@@ -46,6 +46,9 @@ public class AccountService {
 	}
 
     public float getBalance(Long id) throws AccountNotFoundException{
+        if (!accountRepository.findById(id).isPresent()){
+            throw new AccountNotFoundException("Account with id: "+ id + " is not found.");
+        }
         List<Operation> operations = operationRepository.findByAccountId(id);
         Date now = new Date();
         float result = 0;

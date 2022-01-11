@@ -8,7 +8,7 @@ public class Account {
 	private Long id;
     private BankClient client;
 
-    private Account(){
+    public Account(){
         this.id = ++ID_GENERATOR;
     }
    

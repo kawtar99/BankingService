@@ -13,6 +13,14 @@ public class BankClientRepository {
 
     List<BankClient> bankClients;
 
+    public List<BankClient> getBankClients() {
+        return bankClients;
+    }
+
+    public void setBankClients(List<BankClient> bankClients) {
+        this.bankClients = bankClients;
+    }
+
     public BankClientRepository(){
         bankClients = new ArrayList<>();
     }

@@ -15,6 +15,14 @@ public class OperationRepository{
 
     Map<Long, List<Operation>> operations;
 
+    public Map<Long, List<Operation>> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(Map<Long, List<Operation>> operations) {
+        this.operations = operations;
+    }
+
     public OperationRepository(){
         operations = new HashMap<>();
     }
