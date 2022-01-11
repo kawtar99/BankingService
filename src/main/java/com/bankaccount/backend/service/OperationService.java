@@ -25,7 +25,7 @@ public class OperationService {
 
     public List<Operation> listByAccount(Long id) throws AccountNotFoundException{
         if (!accountRepository.findById(id).isPresent()){
-            throw new AccountNotFoundException("Account with id :" + id + "is not found, can't access operations.");
+            throw new AccountNotFoundException("Account with id : " + id + " is not found, can't access operations.");
         }
         return operationRepository.findByAccountId(id);
     }

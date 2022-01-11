@@ -26,7 +26,7 @@ public class BankClientService {
     public BankClient read(Long id) throws BankClientNotFoundException {
         Optional<BankClient> optional = bankClientRepository.findById(id);
         if(!optional.isPresent()){
-            throw new BankClientNotFoundException("Client with id : " + id + " is not found");
+            throw new BankClientNotFoundException("Client with id : " + id + " is not found.");
         }
         return optional.get();
     }
