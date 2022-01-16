@@ -9,8 +9,7 @@ public class BankClient {
 	private String firstName;
 	private String lastName;
 
-    @SuppressWarnings("unused")
-    private BankClient(){
+    public BankClient(){
         this.id = ++ID_GENERATOR;
     }
 

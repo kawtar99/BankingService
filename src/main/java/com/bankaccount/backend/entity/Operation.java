@@ -13,7 +13,7 @@ public class Operation {
 
     private Date date;
     private float amount;
-    private float balance;
+    //private float balance;
     private Account account;
 
     
@@ -21,6 +21,14 @@ public class Operation {
 
     public Operation(){
         this.id = ++ID_GENERATOR;
+    }
+
+    public Operation(String operationName, Date date, float amount, Account account){
+        this.id = ++ID_GENERATOR;
+        this.operationName = operationName;
+        this.date = date;
+        this.amount = amount;
+        this.account = account;
     }
 
     public Long getId() {
@@ -46,12 +54,6 @@ public class Operation {
     }
     public void setAmount(float amount) {
         this.amount = amount;
-    }
-    public float getBalance() {
-        return balance;
-    }
-    public void setBalance(float balance) {
-        this.balance = balance;
     }
 
     public Account getAccount() {

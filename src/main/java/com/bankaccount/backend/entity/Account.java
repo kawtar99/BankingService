@@ -10,6 +10,7 @@ public class Account {
 
     public Account(){
         this.id = ++ID_GENERATOR;
+        this.client = new BankClient();
     }
    
 

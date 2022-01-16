@@ -1,10 +1,12 @@
 package com.bankaccount.backend.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.bankaccount.backend.entity.Account;
+import com.bankaccount.backend.entity.Operation;
 import com.bankaccount.backend.exception.AccountNotFoundException;
 import com.bankaccount.backend.exception.IllegalOperationException;
 import com.bankaccount.backend.service.AccountService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,7 +34,7 @@ public class AccountController {
     
 
     @RequestMapping( value = "/", method = RequestMethod.GET)
-	public Iterable<Account> list(){
+	public List<Account> list(){
 		return accountService.list();
 	}
 
@@ -41,6 +44,7 @@ public class AccountController {
 	}
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     public Account create(@RequestBody Account account){
         return accountService.create(account);
     }
@@ -51,13 +55,13 @@ public class AccountController {
 	}
 
     @RequestMapping(value = "/{id}/withdraw/{amount}", method = RequestMethod.POST)
-    public Account withdraw(@PathVariable(value = "id") Long id, @PathVariable(value = "amount") float amount) throws IllegalOperationException{
+    public Operation withdraw(@PathVariable(value = "id") Long id, @PathVariable(value = "amount") float amount) throws IllegalOperationException{
         Account account = accountService.read(id);
         return accountService.withdrawMoney(account, amount);
     }
 
     @RequestMapping(value = "/{id}/deposit/{amount}", method = RequestMethod.POST)
-    public Account makeDeposit(@PathVariable(value = "id") Long id, @PathVariable(value = "amount") float amount) throws IllegalOperationException{
+    public Operation makeDeposit(@PathVariable(value = "id") Long id, @PathVariable(value = "amount") float amount) throws IllegalOperationException{
         Account account = accountService.read(id);
         return accountService.saveMoney(account, amount);
     }

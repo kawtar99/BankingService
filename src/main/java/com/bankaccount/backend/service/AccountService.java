@@ -60,37 +60,33 @@ public class AccountService {
         return result;
     }
     
-    public Account saveMoney(Account account, float amount) throws IllegalOperationException{
+    public Operation saveMoney(Account account, float amount) throws IllegalOperationException{
         if (amount < 0){
-            throw new IllegalOperationException("The amount should be positive");
+            throw new IllegalOperationException("The amount should be positive.");
         }
         Operation operation = new Operation();
         operation.setOperationName("DEPOSIT");
         operation.setAmount(amount);
-        operation.setBalance(getBalance(account.getId()));
         operation.setDate(new Date());
         operation.setAccount(account);
-        operationRepository.save(operation);
-        return accountRepository.save(account);
+        return operationRepository.save(operation);
     }
 
-    public Account withdrawMoney(Account account, float amount) throws IllegalOperationException{
+    public Operation withdrawMoney(Account account, float amount) throws IllegalOperationException, AccountNotFoundException{
         if (amount < 0){
-            throw new IllegalOperationException("The amount should be positive");
+            throw new IllegalOperationException("The amount should be positive.");
         }
 
         if (amount > getBalance(account.getId())){
-            throw new IllegalOperationException("Your account balance is lower than the amount desired");
+            throw new IllegalOperationException("Your account balance is lower than the amount desired.");
         }
         
         Operation operation = new Operation();
         operation.setOperationName("WITHDRAWAL");
         operation.setAmount(-amount);
-        operation.setBalance(getBalance(account.getId()));
         operation.setDate(new Date());
         operation.setAccount(account);
-        operationRepository.save(operation);
-        return accountRepository.save(account);
+        return operationRepository.save(operation);
     }
 
     public Account update(Long id, Account update) throws AccountNotFoundException {

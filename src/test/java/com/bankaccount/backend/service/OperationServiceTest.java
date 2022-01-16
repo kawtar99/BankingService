@@ -59,8 +59,7 @@ public class OperationServiceTest {
             AccountNotFoundException.class, () -> {
                operationService.listByAccount(1l);
             }
-    );
- 
-    assertEquals("Account with id : 1 is not found, can't access operations.", exception.getMessage());
+        );
+        assertEquals("Account with id : 1 is not found, can't access operations.", exception.getMessage());
     }
 }

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class BankClientRepositoryTest {
 
     private BankClientRepository bankClientRepository = new BankClientRepository();
-    
+
     @Test
     void testSave() {
         BankClient bankClient = new BankClient("fn", "ln");

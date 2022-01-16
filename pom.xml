@@ -34,6 +34,20 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Cucumber Dependencies -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>6.8.1</version>
+    </dependency>
+   
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>6.8.1</version>
+      <scope>test</scope>
+     </dependency>
+ 
 		
 	</dependencies>
 
@@ -43,7 +57,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			
 		</plugins>
+		
 	</build>
 
 </project>

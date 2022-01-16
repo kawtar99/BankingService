@@ -29,7 +29,6 @@ public class OperationRepositoryTest {
         Account account = new Account();
         Operation deposit = new Operation();
         deposit.setAmount(1500);
-        deposit.setBalance(1500);
         deposit.setDate(new Date());
         deposit.setId(1l);
         deposit.setAccount(account);
@@ -51,7 +50,6 @@ public class OperationRepositoryTest {
         Account account = new Account();
         Operation deposit = new Operation();
         deposit.setAmount(600);
-        deposit.setBalance(600);
         deposit.setDate(new Date());
         deposit.setId(1l);
         deposit.setAccount(account);

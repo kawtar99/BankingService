@@ -25,7 +25,7 @@ public class BankClientServiceTest {
     private BankClientRepository bankClientRepository;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
 
         bankClientService = new BankClientService(bankClientRepository);
@@ -56,8 +56,7 @@ public class BankClientServiceTest {
             BankClientNotFoundException.class, () -> {
                 bankClientService.read(2l);
             }
-    );
- 
-    assertEquals("Client with id : 2 is not found.", exception.getMessage());
+        );
+        assertEquals("Client with id : 2 is not found.", exception.getMessage());
     }
 }
