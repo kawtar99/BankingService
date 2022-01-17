@@ -1,6 +1,6 @@
 package com.bankaccount.backend.service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,10 +34,7 @@ public class AccountService {
 
     public Account read(Long id) throws AccountNotFoundException {
 		Optional<Account> optional = accountRepository.findById(id);
-        if(!optional.isPresent()){
-            throw new AccountNotFoundException("Account with id :" + id + " is not found.");
-        }
-        return optional.get();
+        return optional.orElseThrow(() -> new AccountNotFoundException("Account with id :" + id + " is not found."));
 	}
 
 	public Account create(Account account) {
@@ -50,10 +47,10 @@ public class AccountService {
             throw new AccountNotFoundException("Account with id: "+ id + " is not found.");
         }
         List<Operation> operations = operationRepository.findByAccountId(id);
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
         float result = 0;
         for(Operation operation : operations){
-            if(operation.getDate().before(now)){
+            if(operation.getLocalDateTime().isBefore(now)){
                 result += operation.getAmount();
             }
         }
@@ -67,7 +64,7 @@ public class AccountService {
         Operation operation = new Operation();
         operation.setOperationName("DEPOSIT");
         operation.setAmount(amount);
-        operation.setDate(new Date());
+        operation.setLocalDateTime(LocalDateTime.now());
         operation.setAccount(account);
         return operationRepository.save(operation);
     }
@@ -84,7 +81,7 @@ public class AccountService {
         Operation operation = new Operation();
         operation.setOperationName("WITHDRAWAL");
         operation.setAmount(-amount);
-        operation.setDate(new Date());
+        operation.setLocalDateTime(LocalDateTime.now());
         operation.setAccount(account);
         return operationRepository.save(operation);
     }
@@ -97,8 +94,5 @@ public class AccountService {
     public List<Account> list() {
         return accountRepository.findAll();
     }
-
-
-    // TO DO : Exception handling, Repository, tests , service, get balance from operations 
 
 }

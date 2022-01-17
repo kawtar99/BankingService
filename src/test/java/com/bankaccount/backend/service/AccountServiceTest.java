@@ -4,9 +4,9 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,14 +54,10 @@ public class AccountServiceTest {
 
     @Test
     void testGetBalance() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(2021, Calendar.DECEMBER, 23);
-        Date date1 = cal.getTime();
-        cal.set(2021, Calendar.DECEMBER, 31);
-        Date date2 = cal.getTime();
-        cal.set(2022, Calendar.JANUARY, 4);
-        Date date3 = cal.getTime();
-        
+        LocalDateTime date1 = LocalDateTime.of(2021, Month.DECEMBER, 23, 0, 0, 0);
+        LocalDateTime date2 = LocalDateTime.of(2021, Month.DECEMBER, 31, 0, 0, 0);
+        LocalDateTime date3 = LocalDateTime.of(2022, Month.JANUARY, 4, 0, 0, 0);
+      
         List<Operation> testOperations = new ArrayList<>();
         testOperations.add(new Operation("DEPOSIT",date1, 3000l, testAccount));
         testOperations.add(new Operation("DEPOSIT",date2, 1500l, testAccount));
@@ -74,13 +70,10 @@ public class AccountServiceTest {
 
     @Test
     void testGetBalanceFutureOperations() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        Date tomorrow = cal.getTime();
-        cal.set(2021, Calendar.DECEMBER, 23);
-        Date date1 = cal.getTime();
-        cal.set(2021, Calendar.DECEMBER, 31);
-        Date date2 = cal.getTime();
+
+        LocalDateTime date1 = LocalDateTime.of(2022, Month.JANUARY, 4, 0, 0, 0);
+        LocalDateTime date2 = LocalDateTime.of(2022, Month.JANUARY, 14, 0, 0, 0);
+        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
 
         
         List<Operation> testOperations = new ArrayList<>();
@@ -117,7 +110,7 @@ public class AccountServiceTest {
 
     @Test
     void testSaveMoney() {
-        Operation operation = new Operation("DEPOSIT", new Date(), 500, testAccount);
+        Operation operation = new Operation("DEPOSIT", LocalDateTime.now(), 500, testAccount);
         Mockito.when(operationRepository.save(any(Operation.class))).thenReturn(operation);
         Operation result = accountService.saveMoney(testAccount, 500);
         assertEquals(result.getAmount(), 500);
@@ -137,14 +130,12 @@ public class AccountServiceTest {
     void testWithdrawMoney() {
         // Setting the balance to 3000
         List<Operation> testOperations = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        cal.set(2021, Calendar.DECEMBER, 23);
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(2022, Month.JANUARY, 4, 0, 0, 0);
         testOperations.add(new Operation("DEPOSIT", date, 3000l, testAccount));
         Mockito.when(operationRepository.findByAccountId(testAccount.getId())).thenReturn(testOperations);
 
         
-        Operation operation = new Operation("WITHDRAWAL", new Date(), -100, testAccount);
+        Operation operation = new Operation("WITHDRAWAL", LocalDateTime.now(), -100, testAccount);
         Mockito.when(operationRepository.save(any(Operation.class))).thenReturn(operation);
         Operation result = accountService.withdrawMoney(testAccount, 100);
         assertEquals(result.getAmount(), -100);
@@ -153,9 +144,7 @@ public class AccountServiceTest {
     void testWithdrawMoneyInvalidOperation() {
         // Setting the balance to 3000
         List<Operation> testOperations = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        cal.set(2021, Calendar.DECEMBER, 23);
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(2022, Month.JANUARY, 4, 0, 0, 0);
         testOperations.add(new Operation("DEPOSIT", date, 100l, testAccount));
         Mockito.when(operationRepository.findByAccountId(testAccount.getId())).thenReturn(testOperations);
 

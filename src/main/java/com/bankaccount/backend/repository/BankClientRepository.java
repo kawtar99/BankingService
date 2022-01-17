@@ -31,12 +31,7 @@ public class BankClientRepository {
     }
 
     public Optional<BankClient> findById(Long id) {
-        for(int i =0; i< bankClients.size(); i++){
-            if (bankClients.get(i).getId() == id){
-                return Optional.of(bankClients.get(i));
-            }
-        }
-        return Optional.empty();
+        return bankClients.stream().filter(client -> (client.getId() == id)).findAny();
     }
     
 }

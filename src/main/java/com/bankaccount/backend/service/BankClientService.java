@@ -1,7 +1,5 @@
 package com.bankaccount.backend.service;
 
-import java.util.Optional;
-
 import com.bankaccount.backend.entity.BankClient;
 import com.bankaccount.backend.exception.BankClientNotFoundException;
 import com.bankaccount.backend.repository.BankClientRepository;
@@ -24,11 +22,9 @@ public class BankClientService {
     }
 
     public BankClient read(Long id) throws BankClientNotFoundException {
-        Optional<BankClient> optional = bankClientRepository.findById(id);
-        if(!optional.isPresent()){
-            throw new BankClientNotFoundException("Client with id : " + id + " is not found.");
-        }
-        return optional.get();
+        return bankClientRepository
+                .findById(id)
+                .orElseThrow(() -> new BankClientNotFoundException("Client with id : " + id + " is not found."));
     }
     
 }

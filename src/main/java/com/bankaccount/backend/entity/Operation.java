@@ -1,6 +1,6 @@
 package com.bankaccount.backend.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 public class Operation {
@@ -10,8 +10,7 @@ public class Operation {
     private Long id;
     
     private String operationName;
-
-    private Date date;
+    private LocalDateTime date;
     private float amount;
     //private float balance;
     private Account account;
@@ -23,7 +22,7 @@ public class Operation {
         this.id = ++ID_GENERATOR;
     }
 
-    public Operation(String operationName, Date date, float amount, Account account){
+    public Operation(String operationName, LocalDateTime date, float amount, Account account){
         this.id = ++ID_GENERATOR;
         this.operationName = operationName;
         this.date = date;
@@ -43,10 +42,10 @@ public class Operation {
     public void setOperationName(String operationName) {
         this.operationName = operationName;
     }
-    public Date getDate() {
+    public LocalDateTime getLocalDateTime() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setLocalDateTime(LocalDateTime date) {
         this.date = date;
     }
     public float getAmount() {

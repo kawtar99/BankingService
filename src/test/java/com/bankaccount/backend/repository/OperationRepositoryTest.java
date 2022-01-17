@@ -3,8 +3,8 @@ package com.bankaccount.backend.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class OperationRepositoryTest {
         Account account = new Account();
         Operation deposit = new Operation();
         deposit.setAmount(1500);
-        deposit.setDate(new Date());
+        deposit.setLocalDateTime(LocalDateTime.now());
         deposit.setId(1l);
         deposit.setAccount(account);
 
@@ -50,7 +50,7 @@ public class OperationRepositoryTest {
         Account account = new Account();
         Operation deposit = new Operation();
         deposit.setAmount(600);
-        deposit.setDate(new Date());
+        deposit.setLocalDateTime(LocalDateTime.now());
         deposit.setId(1l);
         deposit.setAccount(account);
 

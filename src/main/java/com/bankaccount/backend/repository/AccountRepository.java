@@ -33,12 +33,7 @@ public class AccountRepository  {
     }
 
     public Optional<Account> findById(Long id) {
-        for(int i =0; i< accounts.size(); i++){
-            if (accounts.get(i).getId() == id){
-                return Optional.of(accounts.get(i));
-            }
-        }
-        return Optional.empty();
+        return accounts.stream().filter((acc) -> (acc.getId() == id)).findAny();
     }
 
     public List<Account> findAll() {
