@@ -86,4 +86,12 @@ public class RequirementsTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()", is(3)));
     }
+
+    @Test
+    public void checkBalanceAfterOperations() throws Exception {
+        mockMvc.perform(get("/accounts/{id}/balance", 1))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(800.0)));
+        
+    }
 }
