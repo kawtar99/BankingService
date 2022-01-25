@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bankaccount.backend.entity.Account;
 import com.bankaccount.backend.entity.Operation;
+import com.bankaccount.backend.exception.AccountAlreadyCreatedException;
 import com.bankaccount.backend.exception.AccountNotFoundException;
 import com.bankaccount.backend.exception.IllegalOperationException;
 import com.bankaccount.backend.service.AccountService;
@@ -45,7 +46,7 @@ public class AccountController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Account create(@RequestBody Account account){
+    public Account create(@RequestBody Account account) throws AccountAlreadyCreatedException{
         return accountService.create(account);
     }
 	
@@ -53,6 +54,11 @@ public class AccountController {
 	public Account update(@PathVariable(value="id") Long id, @RequestBody Account account) throws AccountNotFoundException{
 		return accountService.update(id,account);
 	}
+
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    public void deleteAll(){
+        accountService.deleteAll();
+    }
 
     @RequestMapping(value = "/{id}/withdraw/{amount}", method = RequestMethod.POST)
     public Operation withdraw(@PathVariable(value = "id") Long id, @PathVariable(value = "amount") float amount) throws IllegalOperationException{
@@ -78,6 +84,11 @@ public class AccountController {
 
     @ExceptionHandler(IllegalOperationException.class)
     public void handleIllegalOperationexception(IllegalOperationException exception, HttpServletResponse response) throws IOException{
+        response.sendError(400, exception.getMessage());
+    }
+
+    @ExceptionHandler(AccountAlreadyCreatedException.class)
+    public void handleAccountAlreadyCreatedException(AccountAlreadyCreatedException exception, HttpServletResponse response) throws IOException{
         response.sendError(400, exception.getMessage());
     }
 }

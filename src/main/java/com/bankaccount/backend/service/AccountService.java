@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.bankaccount.backend.entity.Account;
 import com.bankaccount.backend.entity.Operation;
+import com.bankaccount.backend.exception.AccountAlreadyCreatedException;
 import com.bankaccount.backend.exception.AccountNotFoundException;
 import com.bankaccount.backend.exception.IllegalOperationException;
 import com.bankaccount.backend.repository.AccountRepository;
@@ -37,12 +38,12 @@ public class AccountService {
         return optional.orElseThrow(() -> new AccountNotFoundException("Account with id :" + id + " is not found."));
 	}
 
-	public Account create(Account account) {
+	public Account create(Account account) throws AccountAlreadyCreatedException{
         bankClientRepository.save(account.getClient());
 		return accountRepository.save(account);
 	}
 
-    public float getBalance(Long id) throws AccountNotFoundException{
+    public synchronized float getBalance(Long id) throws AccountNotFoundException{
         if (!accountRepository.findById(id).isPresent()){
             throw new AccountNotFoundException("Account with id: "+ id + " is not found.");
         }
@@ -95,4 +96,7 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public void deleteAll(){
+        accountRepository.deleteAll();
+    }
 }

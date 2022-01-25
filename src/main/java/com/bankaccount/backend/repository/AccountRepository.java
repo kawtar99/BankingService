@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.bankaccount.backend.entity.Account;
+import com.bankaccount.backend.exception.AccountAlreadyCreatedException;
 
 import org.springframework.stereotype.Repository;
 
@@ -27,7 +28,10 @@ public class AccountRepository  {
         accounts = new ArrayList<Account>();
     }
 
-    public Account save(Account account) {
+    public Account save(Account account) throws AccountAlreadyCreatedException{
+        if (accounts.contains(account)){
+            throw new AccountAlreadyCreatedException("Account with id :"+ account.getId() + "has already been created.");
+        }
         accounts.add(account);
         return account;
     }
@@ -40,5 +44,8 @@ public class AccountRepository  {
         return accounts;
     }
 
-
+    public void deleteAll(){
+        accounts = null;
+        accounts = new ArrayList<>();
+    }
 }

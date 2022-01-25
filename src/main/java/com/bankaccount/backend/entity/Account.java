@@ -30,4 +30,29 @@ public class Account {
         this.client = client;
     }
 
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Account other = (Account) obj;
+        if (client == null) {
+            if (other.client != null)
+                return false;
+        } else if (!client.equals(other.client))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+   
 }
